@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 1</title>
+  <script src="../../vuejs/vue.global.js"></script>
+</head>
+<body>
+  <div>
+    <p>Lesson 5</p>
+    <div id="root-5-2"></div>
+    <div id="root-5-1"></div>
+  </div>
+  <div>
+    <p>Lesson 4</p>
+    <div id="root-4-2"></div>
+    <div id="root-4-1"></div>
+  </div>
+  <div>
+    <p>Lesson 3</p>
+    <div id="root-3-2"></div>
+    <div id="root-3-1"></div>
+  </div>
+  <div>
+    <p>Lesson 2</p>
+    <div id="root-2-2"></div>
+    <div id="root-2-1"></div>
+  </div>
+</body>
+<script>
+  // Lesson 5
+
+  // example 5-2 组件 props 组件属性传递接收
+  const app_5_2 = Vue.createApp({
+    data() {
+      return {
+        inputValue: '',
+        list: []
+      }
+    },
+    methods: {
+      handleAddItem() {
+        this.list.push(this.inputValue);
+        this.inputValue = '';
+      }
+    },
+    template: `
+    <div>
+      <input v-model="inputValue" />
+      <button 
+        v-on:click="handleAddItem"
+      >
+        添加
+      </button>
+      <ul>
+        <todo-item 
+          v-for="(item, index) of list" 
+          v-bind:content="item" 
+          v-bind:index="index"
+        />
+      </ul>
+    </div>
+    `
+  });
+  app_5_2.component('todo-item', {
+    props: ['content', 'index'],
+    template: '<div>{{index}} - {{content}}</div>'
+  });
+  app_5_2.mount('#root-5-2');
+
+  // example 5-1 v-bind 绑定标签属性
+  Vue.createApp({
+    data() {
+      return {
+        inputValue: '',
+        list: []
+      }
+    },
+    methods: {
+      handleAddItem() {
+        this.list.push(this.inputValue);
+        this.inputValue = '';
+      }
+    },
+    template: `
+    <div>
+      <input v-model="inputValue" />
+      <button 
+        v-on:click="handleAddItem"
+        v-bind:title="inputValue"
+      >
+        添加 {{inputValue}}
+      </button>
+      <ul>
+        <li v-for="(item, index) of list">{{index}} {{item}}</li>
+      </ul>
+    </div>
+    `
+  }).mount('#root-5-1');
+
+  // Lesson 4
+
+  // example 4-2 v-model 双向绑定：一方变化，另一方相应变化
+  Vue.createApp({
+    data() {
+      return {
+        inputValue: '',
+        list: []
+      }
+    },
+    methods: {
+      handleAddItem() {
+        this.list.push(this.inputValue);
+        this.inputValue = '';
+      }
+    },
+    template: `
+    <div>
+      <input v-model="inputValue" />
+      <button v-on:click="handleAddItem">添加</button>
+      <ul>
+        <li v-for="(item, index) of list">{{index}} {{item}}</li>
+      </ul>
+    </div>
+    `
+  }).mount('#root-4-2');
+
+  // example 4-1 v-for 循环
+  Vue.createApp({
+    data() {
+      return {
+        list: ['hello', 'world', 'vue', 'code']
+      }
+    },
+    template: `
+      <ul>
+        <li v-for="(item, index) of list">{{index}} {{item}}</li>
+      </ul>
+    `
+  }).mount('#root-4-1');
+
+  // Lesson 3
+
+  // example 3-2 v-if 是否显示
+  Vue.createApp({
+    data() {
+      return {
+        show: true,
+        content: 'Hello World'
+      }
+    },
+    methods: {
+      handleBtnClick() {
+        this.show = !this.show;
+      }
+    },
+    template: `
+      <div>
+        <span v-if="show"> {{content}} </span>
+        <button v-on:click="handleBtnClick">显示/隐藏</button>
+      </div>
+    `
+  }).mount('#root-3-2');
+
+  // example  3-1 v-on 绑定事件 v-on:click 绑定click事件
+  Vue.createApp({
+    data() {
+      return {
+        content: 'Hello World'
+      }
+    },
+    methods: {
+      handleBtnClick() {
+        this.content = this.content.split("").reverse().join("");
+      }
+    },
+    template: `
+      <div>
+        {{content}}
+        <button v-on:click="handleBtnClick">反转</button>
+      </div>
+    `
+  }).mount('#root-3-1');
+  
+  // Lesson 2
+
+  // example 2-2
+  Vue.createApp({
+    data() { // data() 函数定义数据
+      return {
+        content: 1
+      }
+    },
+    mounted() { // 页面加载完后自动执行
+      setInterval(() => {
+        this.content += 1;
+      }, 1000);
+    },
+    template: '<div>{{content}}</div>' // 在节点渲染内容
+  }).mount('#root-2-2'); // 加载节点
+
+  // example 2-1
+  Vue.createApp({
+    template: '<div>Hello World</div>'
+  }).mount('#root-2-1');
+
+</script>
+</html>
