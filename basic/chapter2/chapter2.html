@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 2: Component</title>
+  <script src="../../vuejs/vue.global.js"></script>
+</head>
+<body>
+  <div>
+    <p>Lesson 2 生命周期 lifecycle</p>
+    <div id="root-2"></div>
+  </div>
+  <div>
+    <p>Lesson 1 应用和组件</p>
+    <div id="root-1"></div>
+  </div>
+</body>
+<script>
+
+  // Lesson 2
+
+  // 生命周期函数：在某一时刻会自动执行的函数
+  const app2 = Vue.createApp({
+    data() {
+      return {
+        message: 'hello world'
+      }
+    },
+    methods: {
+      handleItemClick() {
+        console.log("click")
+      }
+    },
+    // 在实例生成之前 会自动执行的函数
+    beforeCreate() {
+      console.log("beforeCreate")
+    },
+    // 在实例生成之后 会自动执行的函数
+    created() {
+      console.log("created")
+    },
+    // 在模板被编译成渲染函数之后 立即自动执行的函数
+    // 在组件内容被渲染到页面之前 立即自动执行的函数
+    beforeMount() {
+      console.log("beforeMount", document.getElementById('root-2').innerHTML)
+    },
+    // 在组件内容被渲染到页面之后 自动执行的函数
+    mounted() {
+      console.log("mounted", document.getElementById('root-2').innerHTML)
+    },
+    // 当 data 中的数据发生变化时 页面渲染/更新前 会自动执行的函数
+    beforeUpdate() {
+      console.log("beforeUpdate", this.message, document.getElementById('root-2').innerHTML)
+    },
+    // 当 data 中的数据发生变化时 页面渲染/更新后 会自动执行的函数
+    updated() {
+      console.log("updated", this.message, document.getElementById('root-2').innerHTML)
+    },
+    // 当 vue 应用卸载时 页面渲染/更新前 会自动执行的函数
+    beforeUnmount() {
+      console.log("beforeUnmount", document.getElementById('root-2').innerHTML)
+    },
+    // 当 vue 应用卸载时 页面渲染/更新后 会自动执行的函数
+    unmounted() {
+      console.log("unmounted", document.getElementById('root-2').innerHTML)
+    },
+    template: '<div v-on:click="handleItemClick">{{message}}</div>'
+  });
+  const vm2 = app2.mount('#root-2');
+
+// Lesson 1
+
+// createApp 表示 创建一个 Vue 应用
+// 传入的参数 表示 这个应用最外层的组件，应该如何展示
+// mvvm 设计模式：m-model 数据，v-view 视图，vm-viewModel 视图数据连接层
+const app1 = Vue.createApp({
+  data() {
+    return {
+      message: 'hello world'
+    }
+  },
+  template: '<div>{{message}}</div>'
+});
+// vm1 代表 vue 应用 app1 的根组件
+const vm1 = app1.mount('#root-1');
+
+</script>
+</html>
